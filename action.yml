@@ -1,0 +1,10 @@
+name: 'Infra Bits'
+description: 'GoHugo installer'
+author: 'Infra Bits'
+inputs:
+  version:
+    required: true
+    description: 'release version to use'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
