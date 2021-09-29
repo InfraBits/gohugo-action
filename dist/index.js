@@ -46,6 +46,7 @@ exports.__esModule = true;
 var core = __nccwpck_require__(186);
 var tc = __nccwpck_require__(784);
 var io = __nccwpck_require__(436);
+var exec = __nccwpck_require__(514);
 function run() {
     return __awaiter(this, void 0, void 0, function () {
         var version, toolAssets, toolExtractedFolder;
@@ -53,7 +54,7 @@ function run() {
             switch (_a.label) {
                 case 0:
                     version = core.getInput('version');
-                    return [4 /*yield*/, tc.downloadTool("https://github.com/gohugoio/hugo/releases/download/v" + version + "/hugo_" + version + "_Linux-64bit.tar.gz")];
+                    return [4 /*yield*/, tc.downloadTool("https://github.com/gohugoio/hugo/releases/download/v" + version + "/hugo_extended_" + version + "_Linux-64bit.tar.gz")];
                 case 1:
                     toolAssets = _a.sent();
                     return [4 /*yield*/, tc.extractTar(toolAssets, "/tmp")];
@@ -61,6 +62,13 @@ function run() {
                     toolExtractedFolder = _a.sent();
                     return [4 /*yield*/, io.mv(toolExtractedFolder + "/hugo", "/usr/local/bin/hugo")];
                 case 3:
+                    _a.sent();
+                    return [4 /*yield*/, exec.exec('hugo', ['version'], { listeners: {
+                                stdout: function (data) {
+                                    core.debug("Installed GoHugo: " + data.toString());
+                                }
+                            } })];
+                case 4:
                     _a.sent();
                     return [2 /*return*/];
             }
